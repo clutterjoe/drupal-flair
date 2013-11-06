@@ -1,16 +1,27 @@
 <?php
 
 function flair_init() {
+
   $json = file_get_contents('http://www.reddit.com/r/gif.json');
+  $gif_obj = json_decode($json)->data->children;
   $gif_array = array();
-  $gif_obj = json_decode($json)->data->children;  
+
   foreach($gif_obj as $obj) {
+
     $gif_url = $obj->data->url;
+
     $pathinfo = pathinfo($gif_url);
     if (strtolower(@$pathinfo['extension']) == 'gif') {
-      $gif_array[] = $gif_url;
+
+      $gif_array[] = array('url' => $gif_url, 'title' => substr($obj->data->title, 0, 30));
     }
   }
+
+  drupal_add_library('system', 'ui');
+  drupal_add_library('system', 'ui.draggable');
   drupal_add_js(array('flair' => $gif_array), 'setting');
   drupal_add_js(drupal_get_path('module', 'flair') . '/js/app.js');
-}
+  drupal_add_css(drupal_get_path('module', 'flair') . '/css/flair.css');
+  
+}  
+

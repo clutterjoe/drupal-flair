@@ -1,0 +1,13 @@
+.flair {
+  position:absolute;
+  height: 100px;
+  width: 100px;
+  overflow:hidden;
+  display:table-cell;
+  vertical-align: middle;
+  text-align: center;
+  border:1px solid black;
+  border-radius: 50px;
+  z-index:1000000000;
+  background:#fff;
+}
